@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function Setter({ onStartClick }: { onStartClick: (e: React.FormEvent<HTMLFormElement>) => void }) {
   return (
@@ -12,7 +12,7 @@ function Setter({ onStartClick }: { onStartClick: (e: React.FormEvent<HTMLFormEl
   )
 }
 
-function Counter({ counterTime, handleReset }: { counterTime: number, handleReset: () => void }) {
+function Counter({ counterTime, handleReset, handlePause }: { counterTime: number, handleReset: () => void, handlePause: () => void }) {
   
   let HH = Math.floor(counterTime / 3600)
   let MM = Math.floor((counterTime % 3600) / 60)
@@ -21,7 +21,7 @@ function Counter({ counterTime, handleReset }: { counterTime: number, handleRese
   return (
     <div>
       <span>{HH}:{MM}:{SS}</span>
-      <button>Pause</button>
+      <button onClick={handlePause}>Pause</button>
       <button onClick={handleReset}>Reset</button>
     </div>
   )
@@ -30,6 +30,8 @@ function Counter({ counterTime, handleReset }: { counterTime: number, handleRese
 function Timer() {
   const [isReset, setIsReset] = useState(true)
   const [counterTime, setCounterTime] = useState(0)
+  const [curTimer, setCurTimer] = useState<NodeJS.Timeout | null>(null)
+  const isPause = useRef(false)
   
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -46,25 +48,39 @@ function Timer() {
   }
 
   function startTimer() {
-    let newCounter = setInterval(() => {
+    let newTimer = setInterval(() => {
       setCounterTime(prev => {
         if (prev <= 1) {
-          clearInterval(newCounter)
+          clearInterval(newTimer)
           setIsReset(true)
         }
         return (prev - 1)
       })
     }, 1000)
+
+    setCurTimer(newTimer)
   }
 
   function handleReset() {
     setIsReset(true)
   }
 
+  function handlePause() {
+    isPause.current = !isPause.current
+    if (isPause.current) {
+      // handle null or type error
+      if (curTimer != null) {
+        clearInterval(curTimer)
+      }
+    } else {
+      startTimer()
+    }
+  }
+
   if (isReset) {
     return <Setter onStartClick={handleSubmit}/>
   } else {
-    return <Counter counterTime={counterTime} handleReset={handleReset} />
+    return <Counter counterTime={counterTime} handleReset={handleReset} handlePause={handlePause} />
   }
 }
 
