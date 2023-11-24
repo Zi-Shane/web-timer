@@ -9,11 +9,11 @@ export function TimerHistory({
 }) {
   return (
     <div className="history">
-      <span>Others</span>
+      <span>Recents</span>
       {history.map((item, i) => {
         let [historyHH, historyMM, historySS, _] = seconds2HHMMMS(item);
         return (
-          <div key={i} className="text" onClick={() => handleHistoryClick(i)}>
+          <div key={i} className="text history-block" onClick={() => handleHistoryClick(i)}>
             <span className="text">
               {historyHH.toString().padStart(2, "0")}:
             </span>

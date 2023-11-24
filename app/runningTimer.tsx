@@ -45,18 +45,15 @@ export function RunningTimer({
             {HH.toString().padStart(2, "0")}:
           </span>
           <span className="text">{MM.toString().padStart(2, "0")}:</span>
-          <span className="text">{SS.toString().padStart(2, "0")}.</span>
-          <span className="text half-text">
-            {MS.toString().padStart(2, "0")}
-          </span>
+          <span className="text">{SS.toString().padStart(2, "0")}</span>
         </div>
       </div>
 
-      <div>
-        <button onClick={handleToggle}>
+      <div className="control-btns">
+        <button className={pauseStatus ? "resume-btn" : "pause-btn"} onClick={handleToggle}>
           {pauseStatus ? "Resume" : "Pause"}
         </button>
-        <button onClick={handleCancel}>Cancel</button>
+        <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
       </div>
     </div>
   );

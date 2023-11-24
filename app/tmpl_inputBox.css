@@ -1,0 +1,35 @@
+.wrapper {
+  height: 80px;
+  min-width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FFF;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper span {
+  width: 100%;
+  text-align: center;
+  font-size: 45px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.num {
+  font-size: 45px;
+  border-left: 2px solid rgba(0, 0, 0, 0.2);
+  border-right: 2px solid rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.input-box {
+  max-width: 70px;
+  height: 50px;
+  border: none;
+  outline: none;
+  font-size: 40px;
+  color: #737373;
+  text-align: center;
+}

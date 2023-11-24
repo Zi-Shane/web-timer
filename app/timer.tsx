@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import { SetupTimer } from "./setupTimer";
 import { RunningTimer } from "./runningTimer";
 
+const N_HISTORY = 3
+
 export function seconds2HHMMMS(
   duration: number
 ): [number, number, number, number] {
@@ -29,8 +31,8 @@ export default function Timer() {
   const totalTime = useRef(0);
 
   useEffect(() => {
-    if (history.length > 5) {
-      let trimHistory = history.slice(-5);
+    if (history.length > N_HISTORY) {
+      let trimHistory = history.slice(-N_HISTORY);
       setHistory(trimHistory);
       localStorage.setItem("HISTORY", JSON.stringify(trimHistory));
     } else {
@@ -39,7 +41,6 @@ export default function Timer() {
   }, [history]);
 
   async function handleToggle() {
-    console.log(pauseStatus);
     if (pauseStatus) {
       // click `resume`
       newCounter();
@@ -68,7 +69,6 @@ export default function Timer() {
           setIsStart(false);
           return prev;
         }
-
         return prev - 1;
       });
     }, 10);
@@ -87,12 +87,12 @@ export default function Timer() {
     console.log("click Start");
     setPauseStatus(false); // initial
     const form = new FormData(e.currentTarget);
-    let [HH, MM, SS, MS] = seconds2HHMMMS(duration);
+    let [HH, MM, SS, _] = seconds2HHMMMS(duration);
     HH = parseInt(form.get("HH")?.toString() || "0");
     MM = parseInt(form.get("MM")?.toString() || "0");
     SS = parseInt(form.get("SS")?.toString() || "0");
     let inputDuration = (HH * 3600 + MM * 60 + SS) * 100;
-    if (inputDuration <= 0) return; // input negative handle by HTML
+    if (inputDuration <= 0 || HH < 0 || MM < 0 || SS < 0) return;
     totalTime.current = inputDuration;
     setHistory([...history, totalTime.current]);
 
