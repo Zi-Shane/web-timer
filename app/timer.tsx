@@ -40,7 +40,7 @@ export default function Timer() {
     }
   }, [history]);
 
-  async function handleToggle() {
+  function handleToggle() {
     if (pauseStatus) {
       // click `resume`
       newCounter();
@@ -56,6 +56,7 @@ export default function Timer() {
 
   function handleCancel() {
     clearInterval(curCounter.current || undefined);
+    setPauseStatus(false);  // reset
     setIsStart(false);
     console.log("click cancel");
   }
@@ -85,7 +86,6 @@ export default function Timer() {
   function handleStartClick(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     console.log("click Start");
-    setPauseStatus(false); // initial
     const form = new FormData(e.currentTarget);
     let [HH, MM, SS, _] = seconds2HHMMMS(duration);
     HH = parseInt(form.get("HH")?.toString() || "0");
@@ -103,6 +103,7 @@ export default function Timer() {
 
   return (
     <div className="body">
+      { isStart || <title>React Timer App</title> }
       {isStart ? (
         <RunningTimer
           handleToggle={handleToggle}

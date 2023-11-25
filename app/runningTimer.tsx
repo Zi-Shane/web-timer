@@ -28,6 +28,9 @@ export function RunningTimer({
     if (hoursValue.current) {
       hoursValue.current.hidden = true;
     }
+    document.title = `${MM.toString().padStart(2, "0")}:${SS.toString().padStart(2, "0")}`
+  } else {
+    document.title = `${HH.toString().padStart(2, "0")}:${MM.toString().padStart(2, "0")}:${SS.toString().padStart(2, "0")}`
   }
 
   // for fix `null` warning
