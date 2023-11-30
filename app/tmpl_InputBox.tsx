@@ -1,4 +1,4 @@
-import "./inputBox.css"
+import "./tmpl_InputBox.css"
 
 export function InputBox() {
     return (
