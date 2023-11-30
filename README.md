@@ -28,6 +28,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Features
 
 - Timer can set range from 00:00:01 to 23:59:59.
-- Recently 3 timer can be quick start on click.
-- Can Pause and Resume timer.
-- Tab title will show timer and update every second.
+- Recently 3 timer can be quick start.
+- Pause and Resume timer.
+- Show timer at tab title.
+- Start 00:00:00 will show warning toast.
