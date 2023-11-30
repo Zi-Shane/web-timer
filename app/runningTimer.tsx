@@ -53,10 +53,10 @@ export function RunningTimer({
       </div>
 
       <div className="control-btns">
-        <button className={pauseStatus ? "resume-btn" : "pause-btn"} onClick={handleToggle}>
+        <button className={pauseStatus ? "resume-btn btn_text" : "pause-btn btn_text"} onClick={handleToggle}>
           {pauseStatus ? "Resume" : "Pause"}
         </button>
-        <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
+        <button className="cancel-btn btn_text" onClick={handleCancel}>Cancel</button>
       </div>
     </div>
   );

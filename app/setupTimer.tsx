@@ -66,8 +66,9 @@ export function SetupTimer({
             +
           </span>
           <input
-            className="timer-box"
+            className="timer-input"
             name="HH"
+            type="number"
             placeholder="00"
             min={0}
             defaultValue="00"
@@ -82,8 +83,9 @@ export function SetupTimer({
             +
           </span>
           <input
-            className="timer-box"
+            className="timer-input"
             name="MM"
+            type="number"
             placeholder="00"
             min={0}
             max={59}
@@ -99,8 +101,9 @@ export function SetupTimer({
             +
           </span>
           <input
-            className="timer-box"
+            className="timer-input"
             name="SS"
+            type="number"
             placeholder="00"
             min={0}
             max={59}
@@ -112,7 +115,7 @@ export function SetupTimer({
           </span>
         </div>
         <div>
-          <button className="submit-btn" type="submit">
+          <button className="submit-btn btn_text" type="submit">
             Start
           </button>
         </div>

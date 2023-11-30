@@ -1,3 +1,5 @@
+import "./tmpl_progressbar.css"
+
 export function ProgressBar() {
     return (
       <div className="body">
