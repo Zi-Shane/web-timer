@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { seconds2HHMMMS } from "./timer";
+import { seconds2HHMMMS } from "./Timer";
 
 function getProcessCSS(percentage: number) {
   return `conic-gradient(#ff8400 ${percentage * 3.6}deg, #ededed 0deg)`;

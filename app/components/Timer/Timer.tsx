@@ -1,4 +1,3 @@
-"use client";
 import { useState, useRef, useEffect } from "react";
 import { SetupTimer } from "./setupTimer";
 import { RunningTimer } from "./runningTimer";
@@ -22,16 +21,13 @@ export function seconds2HHMMMS(
   ];
 }
 
-export default function Timer() {
+export function Timer() {
   const [pauseStatus, setPauseStatus] = useState(false);
   const [isStart, setIsStart] = useState(false);
   const [duration, setDuration] = useState(0); // for paused time than resume
   const [history, setHistory] = useState((): number[] => {
-    let history = localStorage.getItem("HISTORY");
-    if (history == null) {
-      return [];
-    }
-    return JSON.parse(history);
+    let history: string = localStorage.getItem("HISTORY") || "";
+    return JSON.parse(history) || [];
   });
   const [toastList, setToastList] = useState<ToastContent[]>([]);
   const curCounter = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -45,6 +41,7 @@ export default function Timer() {
     } else {
       localStorage.setItem("HISTORY", JSON.stringify(history));
     }
+    console.log("update history")
   }, [history]);
 
   function handleToggle() {

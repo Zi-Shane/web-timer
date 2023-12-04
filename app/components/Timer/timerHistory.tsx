@@ -1,4 +1,4 @@
-import { seconds2HHMMMS } from "./timer";
+import { seconds2HHMMMS } from "./Timer";
 
 export function TimerHistory({
   handleHistoryClick,

@@ -3,10 +3,10 @@ import {
   faXmark,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
-import "./tmpl_notification.css";
+import "./tmpl_toast.css";
 
 
-export function Notification() {
+export function Tmpl_Toast() {
   return (
     <div className="body">
       <div className="toast">
@@ -16,8 +16,6 @@ export function Notification() {
           <span className="text text-2">Check Input!!</span>
         </div>
       </div>
-
-      <button className="trigger">Show Toast</button>
     </div>
   );
 }
