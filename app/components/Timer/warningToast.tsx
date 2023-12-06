@@ -1,10 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faXmark,
   faTriangleExclamation,
-} from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useCallback } from "react";
-import { ToastContent } from "./Timer";
+} from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useCallback } from 'react';
+import './warningToast.css';
+
+export type ToastContent = {
+  id: string;
+  message: string;
+};
 
 export function WarningToast({
   toastList,
@@ -15,10 +20,10 @@ export function WarningToast({
 }) {
   const deleteToast = useCallback(
     (id: string) => {
-      let newList = toastList.filter((e) => e.id != id);
+      let newList = toastList.filter(e => e.id != id);
       setToastList(newList);
     },
-    [setToastList, toastList]
+    [setToastList, toastList],
   );
 
   useEffect(() => {
@@ -29,14 +34,14 @@ export function WarningToast({
     }, 3000);
 
     return () => {
-      console.log("clear");
+      console.log('clear');
       clearInterval(interval);
     };
   }, [deleteToast, toastList]);
 
   return (
     <ul className="toasts-list">
-      {toastList.map((content) => {
+      {toastList.map(content => {
         return (
           <li key={content.id} className="toast">
             <FontAwesomeIcon

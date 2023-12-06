@@ -1,17 +1,13 @@
-import { useState, useRef, useEffect } from "react";
-import { SetupTimer } from "./setupTimer";
-import { RunningTimer } from "./runningTimer";
-import { WarningToast } from "./warningToast";
+import { useState, useRef, useEffect } from 'react';
+import { SetupTimer } from './setupTimer';
+import { RunningTimer } from './runningTimer';
+import { WarningToast } from './warningToast';
+import { ToastPortal, ToastPortalAPI } from 'components';
 
-const N_HISTORY = 3
-
-export type ToastContent = {
-  id: string
-  message: string
-}
+const N_HISTORY = 3;
 
 export function seconds2HHMMMS(
-  duration: number
+  duration: number,
 ): [number, number, number, number] {
   return [
     Math.floor(duration / 360000),
@@ -26,22 +22,21 @@ export function Timer() {
   const [isStart, setIsStart] = useState(false);
   const [duration, setDuration] = useState(0); // for paused time than resume
   const [history, setHistory] = useState((): number[] => {
-    let history: string = localStorage.getItem("HISTORY") || "";
+    let history: string = localStorage.getItem('HISTORY') || '';
     return JSON.parse(history) || [];
   });
-  const [toastList, setToastList] = useState<ToastContent[]>([]);
   const curCounter = useRef<ReturnType<typeof setInterval> | null>(null);
   const totalTime = useRef(0);
+  const toastPortalRef = useRef<ToastPortalAPI>(null);
 
   useEffect(() => {
     if (history.length > N_HISTORY) {
       let trimHistory = history.slice(-N_HISTORY);
       setHistory(trimHistory);
-      localStorage.setItem("HISTORY", JSON.stringify(trimHistory));
+      localStorage.setItem('HISTORY', JSON.stringify(trimHistory));
     } else {
-      localStorage.setItem("HISTORY", JSON.stringify(history));
+      localStorage.setItem('HISTORY', JSON.stringify(history));
     }
-    console.log("update history")
   }, [history]);
 
   function handleToggle() {
@@ -49,26 +44,26 @@ export function Timer() {
       // click `resume`
       newCounter();
       setPauseStatus(false);
-      console.log("click resume");
+      console.log('click resume');
     } else {
       // click `pause`
       clearInterval(curCounter.current || undefined);
       setPauseStatus(true);
-      console.log("click pause");
+      console.log('click pause');
     }
   }
 
   function handleCancel() {
     clearInterval(curCounter.current || undefined);
-    setPauseStatus(false);  // reset
+    setPauseStatus(false); // reset
     setIsStart(false);
-    console.log("click cancel");
+    console.log('click cancel');
   }
 
   function newCounter() {
     // 10/1000 s = 0.01s
     const counter = setInterval(() => {
-      setDuration((prev) => {
+      setDuration(prev => {
         if (prev <= 1) {
           clearInterval(counter);
           setIsStart(false);
@@ -89,34 +84,35 @@ export function Timer() {
 
   function handleStartClick(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    console.log("click Start");
+    console.log('click Start');
     const form = new FormData(e.currentTarget);
     let [HH, MM, SS, _] = seconds2HHMMMS(duration);
-    HH = parseInt(form.get("HH")?.toString() || "0");
-    MM = parseInt(form.get("MM")?.toString() || "0");
-    SS = parseInt(form.get("SS")?.toString() || "0");
-    /* type='number' will help about checking value
+    HH = parseInt(form.get('HH')?.toString() || '0');
+    MM = parseInt(form.get('MM')?.toString() || '0');
+    SS = parseInt(form.get('SS')?.toString() || '0');
+
     if (Number.isNaN(HH) || Number.isNaN(MM) || Number.isNaN(SS)) {
-      doShowWarning();
+      toastPortalRef.current?.addToast('Cannot start with not number!!');
       return;
     }
-    */
     let inputDuration = (HH * 3600 + MM * 60 + SS) * 100;
-    /* type='number' will help about checking value
-    if (inputDuration <= 0 || HH < 0 || MM < 0 || SS < 0) {
-      doShowWarning();
+
+    if (
+      inputDuration <= 0 ||
+      HH < 0 ||
+      MM < 0 ||
+      SS < 0 ||
+      inputDuration > 3600000
+    ) {
+      toastPortalRef.current?.addToast('Range should be 1s to 24hr!!');
       return;
     }
-    */
-    if (inputDuration == 0) {
-      if (toastList.length < 3) {
-        setToastList([...toastList, {
-          id: crypto.randomUUID(), 
-          message: "Cannot start less than 1 second!!"
-        }])
-      }
-      return;
-    }
+    // if (inputDuration == 0) {
+    //   toastPortalRef.current?.addToast(
+    //     'Cannot start less than 1 second!!',
+    //   );
+    //   return;
+    // }
     totalTime.current = inputDuration;
     setHistory([...history, totalTime.current]);
 
@@ -126,9 +122,12 @@ export function Timer() {
   }
 
   return (
-    <div className="body">
-      { isStart || <title>React Timer App</title> }
-      <WarningToast toastList={toastList} setToastList={setToastList}/>
+    <div>
+      {isStart || <title>React Timer App</title>}
+
+      <ToastPortal toastPortalRef={toastPortalRef} />
+      {/* <WarningToast toastList={toastList} setToastList={setToastList} /> */}
+
       {isStart ? (
         <RunningTimer
           handleToggle={handleToggle}

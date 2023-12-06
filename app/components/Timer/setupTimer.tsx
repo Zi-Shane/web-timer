@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { TimerHistory } from "./timerHistory";
+import { useRef } from 'react';
+import { TimerHistory } from './timerHistory';
 
 export function SetupTimer({
   handleStartClick,
@@ -19,7 +19,7 @@ export function SetupTimer({
   */
   function handlePlusClick(inputElem: React.RefObject<HTMLInputElement>) {
     if (inputElem.current != null) {
-      if (inputElem.current.name == "HH") {
+      if (inputElem.current.name == 'HH') {
         if (parseInt(inputElem.current.value) >= 23) return;
       } else {
         if (parseInt(inputElem.current.value) >= 59) return;
@@ -28,10 +28,10 @@ export function SetupTimer({
       if (inputElem.current.value) {
         inputElem.current.value = (parseInt(inputElem.current.value) + 1)
           .toString()
-          .padStart(2, "0");
+          .padStart(2, '0');
       } else {
         // handle empty
-        inputElem.current.value = "1".padStart(2, "0");
+        inputElem.current.value = '1'.padStart(2, '0');
       }
     }
   }
@@ -46,13 +46,13 @@ export function SetupTimer({
       if (inputElem.current.value) {
         inputElem.current.value = (parseInt(inputElem.current.value) - 1)
           .toString()
-          .padStart(2, "0");
+          .padStart(2, '0');
       } else {
         // handle empty
-        if (inputElem.current.name == "HH") {
-          inputElem.current.value = "23";
+        if (inputElem.current.name == 'HH') {
+          inputElem.current.value = '23';
         } else {
-          inputElem.current.value = "59";
+          inputElem.current.value = '59';
         }
       }
     }
@@ -62,7 +62,10 @@ export function SetupTimer({
     <div className="container">
       <form className="setter-wrapper" onSubmit={handleStartClick}>
         <div className="timer-setter">
-          <span className="plus" onClick={() => handlePlusClick(HHInputRef)}>
+          <span
+            className="plus"
+            onClick={() => handlePlusClick(HHInputRef)}
+          >
             +
           </span>
           <input
@@ -74,12 +77,18 @@ export function SetupTimer({
             defaultValue="00"
             ref={HHInputRef}
           />
-          <span className="minus" onClick={() => handleMinusClick(HHInputRef)}>
+          <span
+            className="minus"
+            onClick={() => handleMinusClick(HHInputRef)}
+          >
             -
           </span>
         </div>
         <div className="timer-setter">
-          <span className="plus" onClick={() => handlePlusClick(MMInputRef)}>
+          <span
+            className="plus"
+            onClick={() => handlePlusClick(MMInputRef)}
+          >
             +
           </span>
           <input
@@ -92,12 +101,18 @@ export function SetupTimer({
             defaultValue="00"
             ref={MMInputRef}
           />
-          <span className="minus" onClick={() => handleMinusClick(MMInputRef)}>
+          <span
+            className="minus"
+            onClick={() => handleMinusClick(MMInputRef)}
+          >
             -
           </span>
         </div>
         <div className="timer-setter">
-          <span className="plus" onClick={() => handlePlusClick(SSInputRef)}>
+          <span
+            className="plus"
+            onClick={() => handlePlusClick(SSInputRef)}
+          >
             +
           </span>
           <input
@@ -110,7 +125,10 @@ export function SetupTimer({
             defaultValue="00"
             ref={SSInputRef}
           />
-          <span className="minus" onClick={() => handleMinusClick(SSInputRef)}>
+          <span
+            className="minus"
+            onClick={() => handleMinusClick(SSInputRef)}
+          >
             -
           </span>
         </div>
@@ -127,7 +145,7 @@ export function SetupTimer({
           history={history}
         />
       ) : (
-        ""
+        ''
       )}
     </div>
   );

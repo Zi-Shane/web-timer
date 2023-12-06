@@ -1,0 +1,29 @@
+.toast {
+  display: flex;
+  align-items: center;
+  /* position: absolute;
+  top: 25px; */
+  display: flex;
+  background: #f5e8ad;
+  padding: 10px;
+  margin: 0 0 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.warningIcon {
+  color: #000;
+}
+
+.closeIcon {
+  padding: 5px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.toast .text {
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  margin: 0px 20px;
+}
