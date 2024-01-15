@@ -22,8 +22,16 @@ export function Timer() {
   const [isStart, setIsStart] = useState(false);
   const [duration, setDuration] = useState(0); // for paused time than resume
   const [history, setHistory] = useState((): number[] => {
-    let history: string = localStorage.getItem('HISTORY') || '';
-    return JSON.parse(history) || [];
+    let history: string = '';
+    if (typeof window !== 'undefined') {
+      history = localStorage.getItem('HISTORY') || '';
+    }
+
+    try {
+      return JSON.parse(history);
+    } catch (error) {
+      return JSON.parse('[]');
+    }
   });
   const curCounter = useRef<ReturnType<typeof setInterval> | null>(null);
   const totalTime = useRef(0);

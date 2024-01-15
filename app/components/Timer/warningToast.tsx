@@ -4,7 +4,7 @@ import {
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useCallback } from 'react';
-import './warningToast.css';
+import styles from './toast-styles.module.css';
 
 export type ToastContent = {
   id: string;
@@ -40,21 +40,23 @@ export function WarningToast({
   }, [deleteToast, toastList]);
 
   return (
-    <ul className="toasts-list">
+    <ul className={styles['toasts-list']}>
       {toastList.map(content => {
         return (
-          <li key={content.id} className="toast">
+          <li key={content.id} className={styles['toast']}>
             <FontAwesomeIcon
               icon={faTriangleExclamation}
               size="sm"
-              className="warning-icon"
+              className={styles['warning-icon']}
             />
-            <span className="text text-1">{content.message}</span>
+            <span className={`${styles['text']} ${styles['text-1']}`}>
+              {content.message}
+            </span>
             <FontAwesomeIcon
               icon={faXmark}
               size="sm"
               onClick={() => deleteToast(content.id)}
-              className="close-icon"
+              className={styles['close-icon']}
             />
           </li>
         );
